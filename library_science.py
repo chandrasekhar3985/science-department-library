@@ -1,9 +1,35 @@
 import json
 import os
-import sys
 import pygame
+from pygame import mixer
+import random
+from threading import Thread
+
+
 os.chdir("/Users/chandrasekhar/chandrasekhar_git/Science_dept_lib")
 os.system("clear")
+
+songs = ("ddnews.ogg", "malgudi.ogg", "milesur.ogg", "radio.ogg", "sare.ogg", "surabhi.ogg", "terimitti.ogg", "vande.ogg")
+pygame.mixer.init()
+pygame.display.init()
+
+def main_back():
+    global songs
+    list = random.choice(songs)
+    mixer.music.load(list)
+    mixer.music.set_volume(0.5)
+    mixer.music.play()
+    list = random.choice(songs)
+    mixer.music.queue(list)
+    pygame.mixer.music.set_endevent(pygame.USEREVENT)
+    mixer.music.play()
+    # while True:
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.USEREVENT:
+    #             if len(songs) > 0:
+    #                 list = random.choice(songs)
+    #                 pygame.mixer.music.queue(list)
+
 
 
 class Library:
@@ -22,16 +48,16 @@ class Library:
 
     @staticmethod
     def displaystudents():
-        with open('students_lib.json','r') as read2:
+        with open('students_lib.json', 'r') as read2:
             s1 = json.load(read2)
-        s2 = json.dumps(s1, indent=4,separators=(",",":"))
+        s2 = json.dumps(s1, indent=4, separators=(",", ":"))
         print(f"\u001b[34mStudents Enrolled For Library are : \u001b[32m{s2}\u001b[0m")
 
     @staticmethod
     def displayborrow():
-        with open('lend_lib.json','r') as read3:
+        with open('lend_lib.json', 'r') as read3:
             p1 = json.load(read3)
-        p2 = json.dumps(p1, indent=4, separators=(",",":"))
+        p2 = json.dumps(p1, indent=4, separators=(",", ":"))
         print(f"\u001b[34mBooks are Borrowed By Following Students : \u001b[31m{p2}\u001b[0m")
         pass
 
@@ -210,8 +236,8 @@ prasad = Library(b1, l1, k1)
 
 
 def main_lib():
+    os.system("clear")
     while True:
-
         print(" \n\u001b[31m*******WELCOME TO PRASAD LIBRARY FOR SCIENCE DEPARTMENT******\n ")
         print("\u001b[34;1mYOU ARE WILLING TO VISIT STUDENTS DEPARTMENT OR ADMINISTRATIVE DEPARTMENT\n")
         print("\n\u001b[35;1mSTUDENTS DEPARTMENT DEALS WITH BORROWING AND RETURNING BOOKS FROM LIBRARY\n")
@@ -219,7 +245,8 @@ def main_lib():
         print("\u001b[36;1mTO RESET LIBRARY  AND TO ADD STUDENTS\n")
         print("\n\u001b[34mEnter 1. For Students department\n\u001b[35m      2. For Administrative Department ")
         print("\u001b[36m      3. Exit the Program\n\u001b[34;1m    Note: keep ready your passkey for Admin work\n")
-        x = input("\u001b[35;1m    Please Enter a Valid option : ")
+        print("     \u001b[43m\u001b[37m4. Pause the music\u001b[0m \n     \u001b[43m\u001b[37m5. Resume The music\u001b[0m")
+        x = input("\u001b[35;1m    Please Enter a Valid option : \u001b[0m")
         if x == "1":
             studentsDepart()
         elif x == "2":
@@ -227,8 +254,14 @@ def main_lib():
 
         elif x == "3":
             exit()
+        elif x == "4":
+            mixer.music.pause()
+        elif x == "5":
+            mixer.music.unpause()
         else:
             print("\u001b[31mInvalid Choice Try Again")
+main_back()
+
 
 
 def studentsDepart():
@@ -238,6 +271,8 @@ def studentsDepart():
         print("\n\u001b[34;1mENTER 1. DISPLAY AVAILABLE BOOKS \n\u001b[35;1m      2. TO LEND A BOOK \n\u001b[36;1m      3. TO RETURN A  BOOK ")
         print("\u001b[34m      4. TO DISPLAY NAME OF STUDENTS ENROLLED TO LIBRARY")
         print("\u001b[35m      5. TO DISPLAY BOOKS BORROWED BY STUDENTS \n\u001b[36m      6.TO EXIT STUDENTS DEPARTMENT \n")
+        print("     \u001b[43m\u001b[37m7. Pause the music\u001b[0m \n     \u001b[43m\u001b[37m8. Resume The music\u001b[0m")
+
         x = input("\u001b[34;1mPlease Enter a Valid Option :  ")
         if x == "1":
             prasad.displayBooks()
@@ -266,6 +301,10 @@ def studentsDepart():
             prasad.displayborrow()
         elif x == "6":
             break
+        elif x == "7":
+            mixer.music.pause()
+        elif x == "8":
+            mixer.music.unpause()
         else:
             print("\u001b[31m Its a invalid Choice")
 
@@ -280,6 +319,7 @@ def adminDepart():
             print("\u001b[35m      5. TO DISPLAY NAME OF STUDENTS ENROLLED TO LIBRARY")
             print("\u001b[36m      6. TO DISPLAY BOOKS BORROWED BY STUDENTS")
             print("\u001b[34m      7. TO EXIT \n\u001b[31m        NOTE: DELETE STUDENTS ARE RESTRICTED BY ORDER PRINCIPAL")
+            print("      \u001b[43m\u001b[37m8. Pause the music\u001b[0m \n      \u001b[43m\u001b[37m9. Resume The music\u001b[0m")
             y = input("\u001b[34mPLEASE ENTER A VALID OPTION :  ")
             if y == "1":
                 prasad.displayBooks()
@@ -305,12 +345,20 @@ def adminDepart():
                 prasad.displayborrow()
             elif y == "7":
                 break
+            elif y == "8":
+                pygame.mixer.music.pause()
+            elif y == "9":
+                pygame.mixer.music.unpause()
             elif y == "0":
                 initial()
             else:
                 print("\u001b[31mIts a invalid Input")
 
 
+
+
+
 if __name__ == "__main__":
     main_lib()
+
 
