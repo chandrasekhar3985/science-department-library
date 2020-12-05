@@ -4,7 +4,8 @@ import pygame
 from pygame import mixer
 import random
 import threading
-import sys
+import time
+from datetime import datetime
 
 
 
@@ -15,24 +16,7 @@ songs = ("ddnews.ogg", "malgudi.ogg", "milesur.ogg", "radio.ogg", "sare.ogg", "s
 pygame.mixer.init()
 pygame.display.init()
 
-def music_back():
-    global songs
-    list = random.choice(songs)
-    mixer.music.load(list)
-    mixer.music.set_volume(0.5)
-    mixer.music.play()
-    list = random.choice(songs)
-    mixer.music.queue(list)
-    pygame.mixer.music.set_endevent(pygame.USEREVENT)
-    mixer.music.play()
 
-    while True:
-        x = input()
-        for event in pygame.event.get():
-            if event.type == pygame.USEREVENT:
-                if len(songs) > 0:
-                    list = random.choice(songs)
-                    pygame.mixer.music.queue(list)
 
 
 
@@ -207,6 +191,33 @@ class Library:
             print(f"Student {name_s} added to Database")
         else:
             print(f"\u001b[31mStudent {name_s} already exists in database.")
+    @staticmethod
+    def getdatetime():
+        now = datetime.today()
+        present_time = now.strftime("%c")
+        print(f"\u001b[38;5;163m  Today is\u001b[38;5;37m {present_time}\u001b[0m")
+
+    @staticmethod
+    def music_back(stop):
+        global songs
+        list = random.choice(songs)
+        mixer.music.load(list)
+        mixer.music.set_volume(0.5)
+        mixer.music.play()
+        list = random.choice(songs)
+        mixer.music.queue(list)
+        pygame.mixer.music.set_endevent(pygame.USEREVENT)
+        mixer.music.play()
+
+        while True:
+
+            for event in pygame.event.get():
+                if event.type == pygame.USEREVENT:
+                    if len(songs) > 0:
+                        list = random.choice(songs)
+                        pygame.mixer.music.queue(list)
+            if stop():
+                break
 
 
 def initial():
@@ -240,9 +251,23 @@ with open('students_lib.json', 'r') as f:
 prasad = Library(b1, l1, k1)
 
 
-def main_lib():
+def main():
+    print("Program is Starting .........")
+    stop_threads = False
+    t1 = threading.Thread(target=prasad.music_back, args=(lambda: stop_threads,))
+    t1.start()
+    time.sleep(2)
+
+    try:
+        os.system("clear")
+    except Exception as e:
+        pass
+
 
     while True:
+        print("\n")
+        prasad.getdatetime()
+        print("\n")
 
         print(" \n\u001b[31m*******WELCOME TO PRASAD LIBRARY FOR SCIENCE DEPARTMENT******\n ")
         print("\u001b[34;1mYOU ARE WILLING TO VISIT STUDENTS DEPARTMENT OR ADMINISTRATIVE DEPARTMENT\n")
@@ -259,6 +284,8 @@ def main_lib():
             adminDepart()
 
         elif x == "3":
+            stop_threads = True
+            t1.join()
             exit()
 
         elif x == "4":
@@ -272,6 +299,9 @@ def main_lib():
 
 
 def studentsDepart():
+    print("\n")
+    prasad.getdatetime()
+    print("\n")
 
     while True:
         print("\n\u001b[31m=======Books Only Available To lend If your Name is  Enrolled========\n")
@@ -318,6 +348,9 @@ def studentsDepart():
 
 
 def adminDepart():
+    print("\n")
+    prasad.getdatetime()
+    print("\n")
 
     x = input("\u001b[35m Please Submit Valid Passkey To Enter the Department  :  ")
     if x == "abcd1234":
@@ -364,18 +397,19 @@ def adminDepart():
                 print("\u001b[31mIts a invalid Input")
 
 
-def main():
-    thread1 = threading.Thread(target=main_lib)
-    thread1.start()
-
-    thread2 = threading.Thread(target=music_back)
-    thread2.start()
-    thread1.join()
-    thread2.join()
+# def main():
+#     thread1 = threading.Thread(target=main_lib)
+#     thread1.start()
+#
+#     thread2 = threading.Thread(target=music_back)
+#     thread2.start()
+#     thread1.join()
+#     thread2.join()
 
 
 if __name__ == "__main__":
     main()
+
 
 
 
