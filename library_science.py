@@ -2,6 +2,8 @@ import json
 import os
 import sys
 import pygame
+os.chdir("/Users/chandrasekhar/chandrasekhar_git/Science_dept_lib")
+os.system("clear")
 
 
 class Library:
@@ -12,7 +14,26 @@ class Library:
 
     @staticmethod
     def displayBooks():
-        print(f"Books available in Prasad library are {prasad.books}")
+        with open('books_lib.json', 'r') as read1:
+            b1 = json.load(read1)
+        b2 = json.dumps(b1, indent=4, separators=(",",":"))
+        print(f"Books available in Prasad library are {b2}")
+
+
+    @staticmethod
+    def displaystudents():
+        with open('students_lib.json','r') as read2:
+            s1 = json.load(read2)
+        s2 = json.dumps(s1, indent=4,separators=(",",":"))
+        print(f"Students Enrolled For Library are : {s2}")
+
+    @staticmethod
+    def displayborrow():
+        with open('lend_lib.json','r') as read3:
+            p1 = json.load(read3)
+        p2 = json.dumps(p1, indent=4, separators=(",",":"))
+        print(f"Books are Borrowed By Following Students : {p2}")
+        pass
 
     def addBooks(self, name_b, name_n):
         getoutput()
@@ -191,12 +212,14 @@ prasad = Library(b1, l1, k1)
 def main_lib():
     while True:
 
-        print(" WELCOME TO PRASAD LIBRARY FOR SCIENCE DEPARTMENT ")
-        print("YOU ARE WILLING TO VISIT STUDENTS DEPARTMENT OR ADMINISTRATIVE DEPARTMENT")
-        print("STUDENTS DEPARTMENT DEALS WITH BORROWING AND RETURNING BOOKS FROM LIBRARY")
-        print("ADMINISTATIVE DEPARTMENT DEALS WITH ADDING AND REMOVING BOOKS FROM LIBRARY AND TO RESET LIBRARY")
-        x = input(
-            "Enter 1. For Students department\n 2. For Administrative Department \n 3. Exit the Program\n Note: keep ready your passkey for Admin work\n : ")
+        print(" \n*******WELCOME TO PRASAD LIBRARY FOR SCIENCE DEPARTMENT******\n ")
+        print("YOU ARE WILLING TO VISIT STUDENTS DEPARTMENT OR ADMINISTRATIVE DEPARTMENT\n")
+        print("\nSTUDENTS DEPARTMENT DEALS WITH BORROWING AND RETURNING BOOKS FROM LIBRARY\n")
+        print("\nADMINISTRATIVE DEPARTMENT DEALS WITH ADDING AND REMOVING BOOKS FROM LIBRARY")
+        print("TO RESET LIBRARY  AND TO ADD STUDENTS\n")
+        print("\nEnter 1. For Students department\n      2. For Administrative Department ")
+        print("      3. Exit the Program\n    Note: keep ready your passkey for Admin work\n")
+        x = input("    Please Enter a Valid option : ")
         if x == "1":
             studentsDepart()
         elif x == "2":
@@ -210,10 +233,12 @@ def main_lib():
 
 def studentsDepart():
     while True:
-        print("Books Only Available To lend If your Name is  Enrolled")
-        print("Requested To Return Book As Soon As  Possible So that others can benefit")
-        x = input(
-            "Enter 1. Display available Books \n 2. To Lend A Book \n 3. To Return a Book \n 4 To Exit Students Department \n :  ")
+        print("\n=======Books Only Available To lend If your Name is  Enrolled========\n")
+        print("\nRequested To Return Book As Soon As  Possible So that others can benefit\n")
+        print("\nENTER 1. DISPLAY AVAILABLE BOOKS \n      2. TO LEND A BOOK \n      3. TO RETURN A  BOOK ")
+        print("      4. TO DISPLAY NAME OF STUDENTS ENROLLED TO LIBRARY")
+        print("      5. TO DISPLAY BOOKS BORROWED BY STUDENTS \n      6.TO EXIT STUDENTS DEPARTMENT \n")
+        x = input("Please Enter a Valid Option :  ")
         if x == "1":
             prasad.displayBooks()
         elif x == "2":
@@ -236,19 +261,26 @@ def studentsDepart():
             else:
                 print(f"You {name_s} is not belong to Library Contact Admin")
         elif x == "4":
+            prasad.displaystudents()
+        elif x == "5":
+            prasad.displayborrow()
+        elif x == "6":
             break
         else:
             print(" Its a invalid Choice")
 
 
 def adminDepart():
-    x = input("Please Submit Valid Passkey To Enter the Department")
+    x = input("Please Submit Valid Passkey To Enter the Department  :  ")
     if x == "abcd1234":
         while True:
-            print("WELCOME TO ADMINISTRATIVE DEPARTMENT")
-            print(
-                "ENTER 1. TO DISPLAY AVAILABLE BOOKS \n 2. TO ADD BOOKS \n 3. TO DEL BOOKS \n 4. TO ADD NEW STUDENT \n 0. RESET THE LIBRARY \n 5. TO EXIT \n NOTE: DELETE STUDENTS ARE RESTRICTED BY ORDER PRINCEPAL")
-            y = input("PLEASE ENTER A VALID OPTION :")
+            print("\n#####WELCOME TO ADMINISTRATIVE DEPARTMENT####\n")
+            print("\nENTER 1. TO DISPLAY AVAILABLE BOOKS \n      2. TO ADD BOOKS")
+            print("      3. TO DEL BOOKS \n      4. TO ADD NEW STUDENT \n      0. RESET THE LIBRARY TO DEFAULT")
+            print("      5. TO DISPLAY NAME OF STUDENTS ENROLLED TO LIBRARY")
+            print("      6. TO DISPLAY BOOKS BORROWED BY STUDENTS")
+            print("      7. TO EXIT \n        NOTE: DELETE STUDENTS ARE RESTRICTED BY ORDER PRINCEPAL")
+            y = input("PLEASE ENTER A VALID OPTION :  ")
             if y == "1":
                 prasad.displayBooks()
             elif y == "2":
@@ -268,6 +300,10 @@ def adminDepart():
                 name_s = name_s.upper()
                 prasad.addStudents(name_s)
             elif y == "5":
+                prasad.displaystudents()
+            elif y == "6":
+                prasad.displayborrow()
+            elif y == "7":
                 break
             elif y == "0":
                 initial()
