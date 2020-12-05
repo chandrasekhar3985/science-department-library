@@ -3,7 +3,9 @@ import os
 import pygame
 from pygame import mixer
 import random
-from threading import Thread
+import threading
+import sys
+
 
 
 os.chdir("/Users/chandrasekhar/chandrasekhar_git/Science_dept_lib")
@@ -13,7 +15,7 @@ songs = ("ddnews.ogg", "malgudi.ogg", "milesur.ogg", "radio.ogg", "sare.ogg", "s
 pygame.mixer.init()
 pygame.display.init()
 
-def main_back():
+def music_back():
     global songs
     list = random.choice(songs)
     mixer.music.load(list)
@@ -23,12 +25,15 @@ def main_back():
     mixer.music.queue(list)
     pygame.mixer.music.set_endevent(pygame.USEREVENT)
     mixer.music.play()
-    # while True:
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.USEREVENT:
-    #             if len(songs) > 0:
-    #                 list = random.choice(songs)
-    #                 pygame.mixer.music.queue(list)
+
+    while True:
+        x = input()
+        for event in pygame.event.get():
+            if event.type == pygame.USEREVENT:
+                if len(songs) > 0:
+                    list = random.choice(songs)
+                    pygame.mixer.music.queue(list)
+
 
 
 
@@ -236,8 +241,9 @@ prasad = Library(b1, l1, k1)
 
 
 def main_lib():
-    os.system("clear")
+
     while True:
+
         print(" \n\u001b[31m*******WELCOME TO PRASAD LIBRARY FOR SCIENCE DEPARTMENT******\n ")
         print("\u001b[34;1mYOU ARE WILLING TO VISIT STUDENTS DEPARTMENT OR ADMINISTRATIVE DEPARTMENT\n")
         print("\n\u001b[35;1mSTUDENTS DEPARTMENT DEALS WITH BORROWING AND RETURNING BOOKS FROM LIBRARY\n")
@@ -254,17 +260,19 @@ def main_lib():
 
         elif x == "3":
             exit()
+
         elif x == "4":
             mixer.music.pause()
         elif x == "5":
             mixer.music.unpause()
         else:
             print("\u001b[31mInvalid Choice Try Again")
-main_back()
+
 
 
 
 def studentsDepart():
+
     while True:
         print("\n\u001b[31m=======Books Only Available To lend If your Name is  Enrolled========\n")
         print("\n\u001b[36;1mRequested To Return Book As Soon As  Possible So that others can benefit\n")
@@ -310,6 +318,7 @@ def studentsDepart():
 
 
 def adminDepart():
+
     x = input("\u001b[35m Please Submit Valid Passkey To Enter the Department  :  ")
     if x == "abcd1234":
         while True:
@@ -355,10 +364,19 @@ def adminDepart():
                 print("\u001b[31mIts a invalid Input")
 
 
+def main():
+    thread1 = threading.Thread(target=main_lib)
+    thread1.start()
 
+    thread2 = threading.Thread(target=music_back)
+    thread2.start()
+    thread1.join()
+    thread2.join()
 
 
 if __name__ == "__main__":
-    main_lib()
+    main()
+
+
 
 
