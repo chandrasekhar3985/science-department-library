@@ -17,7 +17,7 @@ class Library:
         with open('books_lib.json', 'r') as read1:
             b1 = json.load(read1)
         b2 = json.dumps(b1, indent=4, separators=(",",":"))
-        print(f"Books available in Prasad library are {b2}")
+        print(f"\u001b[34mBooks available in Prasad library are :\u001b[32m{b2}\u001b[0m")
 
 
     @staticmethod
@@ -25,14 +25,14 @@ class Library:
         with open('students_lib.json','r') as read2:
             s1 = json.load(read2)
         s2 = json.dumps(s1, indent=4,separators=(",",":"))
-        print(f"Students Enrolled For Library are : {s2}")
+        print(f"\u001b[34mStudents Enrolled For Library are : \u001b[32m{s2}\u001b[0m")
 
     @staticmethod
     def displayborrow():
         with open('lend_lib.json','r') as read3:
             p1 = json.load(read3)
         p2 = json.dumps(p1, indent=4, separators=(",",":"))
-        print(f"Books are Borrowed By Following Students : {p2}")
+        print(f"\u001b[34mBooks are Borrowed By Following Students : \u001b[31m{p2}\u001b[0m")
         pass
 
     def addBooks(self, name_b, name_n):
@@ -57,11 +57,11 @@ class Library:
                 with open('books_lib.json', 'w') as f:
                     json.dump(prasad.books, f, indent=4, separators=(",", ":"))
             elif c1 == 10:
-                print(f"For this {name_b} book Library has full capacity, Submit this to Administration ")
+                print(f"\u001b[31mFor this {name_b} book Library has full capacity, Submit this to Administration ")
             elif (c1 + name_n) >= 11:
                 c4 = 10 - c1
-                print(f"Following {name_b} added in {c4} numbers to achieve its full capacity")
-                print(f"Rest {name_b} books {name_n - c4} submitted to Administration")
+                print(f"\u001b[32;1mFollowing {name_b} added in {c4} numbers to achieve its full capacity")
+                print(f"\u001b[32;1mRest {name_b} books {name_n - c4} submitted to Administration")
                 h = prasad.books[name_b]
                 h = h + c4
                 prasad.books[name_b] = h
@@ -69,7 +69,7 @@ class Library:
                     json.dump(prasad.books, f, indent=4, separators=(",", ":"))
         else:
             if name_n < 11:
-                print(f"The book {name_b} in {name_n} added to the library")
+                print(f"\u001b[32;1mThe book {name_b} in {name_n} added to the library")
                 new_dict_1 = {name_b: name_n}
                 prasad.books.update(new_dict_1)
                 with open('books_lib.json', 'w') as f:
@@ -80,7 +80,7 @@ class Library:
                 prasad.books.update(new_dict_1)
                 with open('books_lib.json', 'w') as f:
                     json.dump(prasad.books, f, indent=4, separators=(",", ":"))
-                print(f"The Book {name_b} in 10 numbers added to library and {c5} returned to admin")
+                print(f"\u001b[32;1mThe Book {name_b} in 10 numbers added to library and {c5} returned to admin")
 
     def lendBooks(self, name_s, name_b):
         getoutput()
@@ -117,11 +117,11 @@ class Library:
                 else:
                     print(f"Sorry, {name_b} is not in stuck")
                     print("Books are with {}".format(l))
-                    print("Request Them To Return So that it will be available to you")
+                    print("\u001b[31mRequest Them To Return So that it will be available to you")
             else:
-                print(f"You already Posses {name_b}, Please Return it.")
+                print(f"\u001b[31mYou already Posses {name_b}, Please Return it.")
         else:
-            print(f"The Requested book is not in Library \n Contact Administration")
+            print(f"\u001b[31mThe Requested book is not in Library \n Contact Administration")
 
     def returnBooks(self, name_s, name_b):
         getoutput()
@@ -132,7 +132,7 @@ class Library:
             except Exception as e:
                 p = []
             if name_s in p:
-                print(f"Thank You, Book {name_b} well received, visit Again")
+                print(f"\u001b[32;1mThank You, Book {name_b} well received, visit Again")
                 z = prasad.books[name_b]
                 z = z + 1
                 prasad.books[name_b] = z
@@ -146,9 +146,9 @@ class Library:
                 with open('lend_lib.json', 'w') as f:
                     json.dump(prasad.lend, f, indent=4, separators=(",", ":"))
             else:
-                print(f"This {name_b} book is not belong to this Library")
+                print(f"\u001b[31mThis {name_b} book is not belong to this Library")
         else:
-            print(f"Such {name_b} has not been lend to any one. Check again")
+            print(f"\u001b[31mSuch {name_b} has not been lend to any one. Check again")
 
     def delBooks(self, name_b):
         getoutput()
@@ -164,7 +164,7 @@ class Library:
             with open('lend_lib.json', 'w') as f:
                 json.dump(prasad.lend, f, indent=4, separators=(",", ":"))
         else:
-            print(f" Such book {name_b} is not in Library Database")
+            print(f" \u001b[31mSuch book {name_b} is not in Library Database")
 
     def addStudents(self, name_s):
         getoutput()
@@ -175,7 +175,7 @@ class Library:
                 json.dump(prasad.list, f, indent=4, separators=(",", ":"))
             print(f"Student {name_s} added to Database")
         else:
-            print(f"Student {name_s} already exists in database.")
+            print(f"\u001b[31mStudent {name_s} already exists in database.")
 
 
 def initial():
@@ -212,14 +212,14 @@ prasad = Library(b1, l1, k1)
 def main_lib():
     while True:
 
-        print(" \n*******WELCOME TO PRASAD LIBRARY FOR SCIENCE DEPARTMENT******\n ")
-        print("YOU ARE WILLING TO VISIT STUDENTS DEPARTMENT OR ADMINISTRATIVE DEPARTMENT\n")
-        print("\nSTUDENTS DEPARTMENT DEALS WITH BORROWING AND RETURNING BOOKS FROM LIBRARY\n")
-        print("\nADMINISTRATIVE DEPARTMENT DEALS WITH ADDING AND REMOVING BOOKS FROM LIBRARY")
-        print("TO RESET LIBRARY  AND TO ADD STUDENTS\n")
-        print("\nEnter 1. For Students department\n      2. For Administrative Department ")
-        print("      3. Exit the Program\n    Note: keep ready your passkey for Admin work\n")
-        x = input("    Please Enter a Valid option : ")
+        print(" \n\u001b[31m*******WELCOME TO PRASAD LIBRARY FOR SCIENCE DEPARTMENT******\n ")
+        print("\u001b[34;1mYOU ARE WILLING TO VISIT STUDENTS DEPARTMENT OR ADMINISTRATIVE DEPARTMENT\n")
+        print("\n\u001b[35;1mSTUDENTS DEPARTMENT DEALS WITH BORROWING AND RETURNING BOOKS FROM LIBRARY\n")
+        print("\n\u001b[36;1mADMINISTRATIVE DEPARTMENT DEALS WITH ADDING AND REMOVING BOOKS FROM LIBRARY")
+        print("\u001b[36;1mTO RESET LIBRARY  AND TO ADD STUDENTS\n")
+        print("\n\u001b[34mEnter 1. For Students department\n\u001b[35m      2. For Administrative Department ")
+        print("\u001b[36m      3. Exit the Program\n\u001b[34;1m    Note: keep ready your passkey for Admin work\n")
+        x = input("\u001b[35;1m    Please Enter a Valid option : ")
         if x == "1":
             studentsDepart()
         elif x == "2":
@@ -228,38 +228,38 @@ def main_lib():
         elif x == "3":
             exit()
         else:
-            print("Invalid Choice Try Again")
+            print("\u001b[31mInvalid Choice Try Again")
 
 
 def studentsDepart():
     while True:
-        print("\n=======Books Only Available To lend If your Name is  Enrolled========\n")
-        print("\nRequested To Return Book As Soon As  Possible So that others can benefit\n")
-        print("\nENTER 1. DISPLAY AVAILABLE BOOKS \n      2. TO LEND A BOOK \n      3. TO RETURN A  BOOK ")
-        print("      4. TO DISPLAY NAME OF STUDENTS ENROLLED TO LIBRARY")
-        print("      5. TO DISPLAY BOOKS BORROWED BY STUDENTS \n      6.TO EXIT STUDENTS DEPARTMENT \n")
-        x = input("Please Enter a Valid Option :  ")
+        print("\n\u001b[31m=======Books Only Available To lend If your Name is  Enrolled========\n")
+        print("\n\u001b[36;1mRequested To Return Book As Soon As  Possible So that others can benefit\n")
+        print("\n\u001b[34;1mENTER 1. DISPLAY AVAILABLE BOOKS \n\u001b[35;1m      2. TO LEND A BOOK \n\u001b[36;1m      3. TO RETURN A  BOOK ")
+        print("\u001b[34m      4. TO DISPLAY NAME OF STUDENTS ENROLLED TO LIBRARY")
+        print("\u001b[35m      5. TO DISPLAY BOOKS BORROWED BY STUDENTS \n\u001b[36m      6.TO EXIT STUDENTS DEPARTMENT \n")
+        x = input("\u001b[34;1mPlease Enter a Valid Option :  ")
         if x == "1":
             prasad.displayBooks()
         elif x == "2":
-            name_s = input("Enter The Name Of the Student :   ")
+            name_s = input("\u001b[34mEnter The Name Of the Student :   ")
             name_s = name_s.upper()
 
             if name_s in prasad.list:
-                name_b = input("Please Enter The name of the Book :  ")
+                name_b = input("\u001b[35mPlease Enter The name of the Book :  ")
                 name_b = name_b.upper()
                 prasad.lendBooks(name_s, name_b)
             else:
-                print(f"You {name_s} is not belong to Library Contact Admin")
+                print(f"\u001b[31mYou {name_s} is not belong to Library Contact Admin")
         elif x == "3":
-            name_s = input("Enter The Name Of the Student :   ")
+            name_s = input("\u001b[36mEnter The Name Of the Student :   ")
             name_s = name_s.upper()
             if name_s in prasad.list:
-                name_b = input("Please Enter The name of the Book :  ")
+                name_b = input("\u001b[34mPlease Enter The name of the Book :  ")
                 name_b = name_b.upper()
                 prasad.returnBooks(name_s, name_b)
             else:
-                print(f"You {name_s} is not belong to Library Contact Admin")
+                print(f"\u001b[31mYou {name_s} is not belong to Library Contact Admin")
         elif x == "4":
             prasad.displaystudents()
         elif x == "5":
@@ -267,36 +267,36 @@ def studentsDepart():
         elif x == "6":
             break
         else:
-            print(" Its a invalid Choice")
+            print("\u001b[31m Its a invalid Choice")
 
 
 def adminDepart():
-    x = input("Please Submit Valid Passkey To Enter the Department  :  ")
+    x = input("\u001b[35m Please Submit Valid Passkey To Enter the Department  :  ")
     if x == "abcd1234":
         while True:
-            print("\n#####WELCOME TO ADMINISTRATIVE DEPARTMENT####\n")
-            print("\nENTER 1. TO DISPLAY AVAILABLE BOOKS \n      2. TO ADD BOOKS")
-            print("      3. TO DEL BOOKS \n      4. TO ADD NEW STUDENT \n      0. RESET THE LIBRARY TO DEFAULT")
-            print("      5. TO DISPLAY NAME OF STUDENTS ENROLLED TO LIBRARY")
-            print("      6. TO DISPLAY BOOKS BORROWED BY STUDENTS")
-            print("      7. TO EXIT \n        NOTE: DELETE STUDENTS ARE RESTRICTED BY ORDER PRINCEPAL")
-            y = input("PLEASE ENTER A VALID OPTION :  ")
+            print("\n\u001b[31m#####WELCOME TO ADMINISTRATIVE DEPARTMENT####\n")
+            print("\n\u001b[36mENTER 1. TO DISPLAY AVAILABLE BOOKS \n\u001b[34m      2. TO ADD BOOKS")
+            print("\u001b[35m      3. TO DEL BOOKS \n\u001b[36m      4. TO ADD NEW STUDENT \n\u001b[34m      0. RESET THE LIBRARY TO DEFAULT")
+            print("\u001b[35m      5. TO DISPLAY NAME OF STUDENTS ENROLLED TO LIBRARY")
+            print("\u001b[36m      6. TO DISPLAY BOOKS BORROWED BY STUDENTS")
+            print("\u001b[34m      7. TO EXIT \n\u001b[31m        NOTE: DELETE STUDENTS ARE RESTRICTED BY ORDER PRINCIPAL")
+            y = input("\u001b[34mPLEASE ENTER A VALID OPTION :  ")
             if y == "1":
                 prasad.displayBooks()
             elif y == "2":
-                name_b = input("Please Enter The Name of the book")
+                name_b = input("\u001b[36mPlease Enter The Name of the book")
                 name_b = name_b.upper()
                 name_n = int(input(
-                    "Enter The number of books you want to add. \n Note Maximum capacity of Each book is 10, Extra book will Return to Admin \n  : "))
+                    "\u001b[32;1mEnter The number of books you want to add. \n Note Maximum capacity of Each book is 10, Extra book will Return to Admin \n  : "))
                 prasad.addBooks(name_b, name_n)
             elif y == "3":
                 print(
-                    "\nCaution If you delete record of the book,\n Same is removed from Library book Record  and Students Lend Record")
-                name_b = input("Please Enter The name of Book You want To Remove : ")
+                    "\n\u001b[31mCaution If you delete record of the book,\n Same is removed from Library book Record  and Students Lend Record")
+                name_b = input("\u001b[36mPlease Enter The name of Book You want To Remove : ")
                 name_b = name_b.upper()
                 prasad.delBooks(name_b)
             elif y == "4":
-                name_s = input("Please Enter The Name Of Student : ")
+                name_s = input("\u001b[36mPlease Enter The Name Of Student : ")
                 name_s = name_s.upper()
                 prasad.addStudents(name_s)
             elif y == "5":
@@ -308,7 +308,7 @@ def adminDepart():
             elif y == "0":
                 initial()
             else:
-                print("Its a invalid Input")
+                print("\u001b[31mIts a invalid Input")
 
 
 if __name__ == "__main__":
